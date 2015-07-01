@@ -13,7 +13,7 @@ endif()
 
 configure_file(Doxyfile.in Doxyfile @ONLY)
 add_custom_target(doc
-    COMMAND ! ${DOXYGEN_EXECUTABLE} Doxyfile #2>&1 | grep "warning" | grep -v -e "recursive"
+    COMMAND ! ${DOXYGEN_EXECUTABLE} Doxyfile 2>&1 | grep "warning" | grep -v -e "recursive"
     COMMENT "Generating API documentation with Doxygen"
     VERBATIM
 )
@@ -24,9 +24,9 @@ if (NOT GIT_FOUND)
 endif()
 
 add_custom_target(gh-pages.clone
-    COMMAND [ -e ${CMAKE_SOURCE_DIR}/doc/gh-pages ] || ${GIT_EXECUTABLE} clone ${PROJECT_NAME_ORIGIN_URL} --depth 1 --branch=gh-pages doc/gh-pages
+    COMMAND [ -e ${CMAKE_SOURCE_DIR}/site/gh-pages ] || ${GIT_EXECUTABLE} clone ${PROJECT_NAME_ORIGIN_URL} --depth 1 --branch=gh-pages site/gh-pages
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-    COMMENT "Cloning the gh-pages branch into the doc/gh-pages directory"
+    COMMENT "Cloning the gh-pages branch into the site/gh-pages directory"
     VERBATIM
 )
 
@@ -35,14 +35,14 @@ add_custom_target(gh-pages.clean
     COMMAND ${CMAKE_COMMAND} -E remove_directory search
     WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/gh-pages
     DEPENDS gh-pages.clone
-    COMMENT "Cleaning up doc/gh-pages"
+    COMMENT "Cleaning up site/gh-pages"
     VERBATIM
 )
 
 add_custom_target(gh-pages.copy
     COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_BINARY_DIR}/html ${CMAKE_CURRENT_LIST_DIR}/gh-pages
     WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/gh-pages
-    COMMENT "Copying the documentation from ${CMAKE_CURRENT_BINARY_DIR}/html to doc/gh-pages"
+    COMMENT "Copying the documentation from ${CMAKE_CURRENT_BINARY_DIR}/html to site/gh-pages"
     DEPENDS doc gh-pages.clean
     VERBATIM
 )

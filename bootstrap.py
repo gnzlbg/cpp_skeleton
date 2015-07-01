@@ -26,7 +26,7 @@ def apply_project_name(project_name):
         print("reading " + file_path)
         fstr = open(file_path).read()
         fstr = fstr.replace('project_name', project_name)
-        fstr = fstr.replace('project_name'.upper(), project_name.upper())
+        fstr = fstr.replace('project_name_'.upper(), project_name.upper() + '_')
         fstr = fstr.replace('cpp_skeleton', project_name)
         fstr = fstr.replace('- ./bootstrap.py test_project',
                             '#- ./bootstrap.py test_project # DISABLED IN USER PROJECTS')

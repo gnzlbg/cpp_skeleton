@@ -21,23 +21,6 @@ The aim of this project is to give you a fully-functional starting point for
 your own projects, so that you can skip setting up most of these tools
 correctly.
 
-## Getting started
-
-1. Fork this repository and check-out your fork.
-2. Add your repository to [Travis-CI][] and [Coveralls][].
-3. Run `bootstrap.py` script to configure it to your needs.
-4. Commit your changes to your repository.
-5. Start working on your project.
-
-### CMake configuration options:
-
-- `PROJECT_NAME_ENABLE_VALGRIND`: Run the unit tests and examples under [valgrind][] if it is found.
-- `PROJECT_NAME_ENABLE_ASAN`: Run the unit tests and examples using [AddressSanitizer][].
-- `PROJECT_NAME_ENABLE_COVERAGE`: Run the unit tests and examples with code coverage instrumentation.
-- `PROJECT_NAME_ENABLE_WERROR`: Fail and stop if a warning is triggered.
-- `PROJECT_NAME_ENABLE_DEBUG_INFORMATION`: Includes debug information in the binaries.
-- `PROJECT_NAME_ENABLE_ASSERTIONS`: Enables assertions.
-
 ## What you get
 
 - [CMake][] as a meta-build system:
@@ -51,6 +34,31 @@ correctly.
   - test your code in debug/release, w/o [valgrind][], w/o [AddressSanitizer][],
   - uploads code coverage automatically to [Coveralls][].
 - [Coveralls][] shows per-line code coverage.
+
+## Getting started
+
+1. Fork this repository and check-out your fork.
+2. Add your repository to [Travis-CI][] and [Coveralls][].
+3. Run `bootstrap.py` script to configure it to your needs.
+4. Commit your changes to your repository.
+5. Start working on your project.
+
+### CMake configuration options
+
+- `PROJECT_NAME_ENABLE_VALGRIND`: Run the unit tests and examples under [valgrind][] if it is found.
+- `PROJECT_NAME_ENABLE_ASAN`: Run the unit tests and examples using [AddressSanitizer][].
+- `PROJECT_NAME_ENABLE_COVERAGE`: Run the unit tests and examples with code coverage instrumentation.
+- `PROJECT_NAME_ENABLE_WERROR`: Fail and stop if a warning is triggered.
+- `PROJECT_NAME_ENABLE_DEBUG_INFORMATION`: Includes debug information in the binaries.
+- `PROJECT_NAME_ENABLE_ASSERTIONS`: Enables assertions.
+
+### CMake targets
+
+- `make`: Compiles top-level targets.
+- `make tests`: Compiles the tests.
+- `make examples`: Compiles the examples.
+- `make check`: Runs the test and the examples.
+- `make doc`: Generates the documentation.
 
 ## Directory structure
 

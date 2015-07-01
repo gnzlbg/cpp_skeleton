@@ -164,6 +164,9 @@ if (GIT_FOUND)
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 endif()
 
+# Doxygen
+find_package(Doxygen)
+
 # Valgrid
 if (PROJECT_NAME_ENABLE_VALGRIND)
   find_program(MEMORYCHECK_COMMAND valgrind REQUIRED)
@@ -171,8 +174,9 @@ if (PROJECT_NAME_ENABLE_VALGRIND)
   include(Dart)
 endif()
 
+
 #find_package(Boost)
-# find_package(Doxygen)
+
 # find_package(Meta)
 # find_package(MPL11)
 # find_package(PythonInterp 2.7)
@@ -208,7 +212,7 @@ endif()
 ##############################################################################
 # Setup custom functions to ease the creation of targets
 ##############################################################################
-#   boost_hana_target_name_for(<output variable> <source file> [ext])
+#   project_name_target_name_for(<output variable> <source file> [ext])
 #
 # Return the target name associated to a source file. If the path of the
 # source file relative from the root of project_name is `path/to/source/file.ext`,
@@ -251,7 +255,7 @@ endmacro()
 # Setup subdirectories
 ##############################################################################
 #add_subdirectory(benchmark)
-#add_subdirectory(doc)
+add_subdirectory(site)
 add_subdirectory(example)
 add_subdirectory(test)
 

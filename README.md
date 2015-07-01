@@ -34,13 +34,16 @@ correctly.
   - test your code in debug/release, w/o [valgrind][], w/o [AddressSanitizer][],
   - uploads code coverage automatically to [Coveralls][].
 - [Coveralls][] shows per-line code coverage.
+- Automatic [Doxygen][] documentation generation and deployment to [gh-pages][].
 
 ## Getting started
 
 1. Fork this repository and check-out your fork.
 2. Add your repository to [Travis-CI][] and [Coveralls][].
 3. Run `bootstrap.py` script to configure it to your needs.
-4. Commit your changes to your repository.
+   3.1 Replace the secure token with your own.
+   3.2 Create a gh-pages branch that is empty.
+4. Commit your changes to your repository (including the gh-pages branch).
 5. Start working on your project.
 
 ### CMake configuration options
@@ -81,8 +84,6 @@ CMakeLists.txt        : CMake configuration
 
 - Targets to check the format and reformat your code automatically.
 - Semantic versioning.
-- Automatic documentation generation from doxygen.
-- Automatic upload of the documentation to gh-pages.
 - Provide FindLib.cmake files for common libraries that automatically.
 get the last version from their repository:
     - [ASIO][],

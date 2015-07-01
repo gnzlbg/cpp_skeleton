@@ -6,16 +6,19 @@
 namespace project_name {
 
 inline namespace v1 {
-
 namespace component {
 
 /// B struct
 struct B {
-  float a; ///< A float
-  int b;   ///< An int
+  float a;  ///< A float
+  int b;    ///< An int
 };
 
-} // namespace component
+/// Returns the value of B::b incremented by 1
+int bar(B b) { return b.b + 1; }
 
-} // namespace v1
-} // namespace project_name
+}  // namespace component
+
+}  // namespace v1
+  
+}  // namespace project_name

@@ -69,8 +69,8 @@ matrix:
             - ubuntu-toolchain-r-test
 
     # GCC 5, release build, valgrind
-    - env: COMPILER=clang++-3.7 BUILD_TYPE=Release Valgrind=true
-      addons: *clang37
+    - env: COMPILER=g++-5 BUILD_TYPE=Release Valgrind=true
+      addons: *gcc5
 
 env:
   global:

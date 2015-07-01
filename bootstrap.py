@@ -28,6 +28,8 @@ def apply_project_name(project_name):
         fstr = fstr.replace('project_name', project_name)
         fstr = fstr.replace('project_name'.upper(), project_name.upper())
         fstr = fstr.replace('cpp_skeleton', project_name)
+        fstr = fstr.replace('- ./bootstrap.py test_project',
+                            '#- ./bootstrap.py test_project # DISABLED IN USER PROJECTS')
         f = open(file_path, 'w')
         f.write(fstr)
         f.flush()

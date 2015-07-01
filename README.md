@@ -12,10 +12,10 @@ ideas from the build systems of [Paul Fultz II][] [FIT][]'s library and
 
 Setting up a modern C++ project with Continuous Integration is a time-consuming
 task. The amount of tools available is daunting, and one really wants to use
-them all: cmake as a meta-build-system, gh-pages and doxygen for documentation,
-travis-ci for running your unit-tests and performing continuous integration,
-coveralls for displaying code coverage reports, clang-format for
-auto-formatting, valgrind, sanitizers, swang, and many more!
+them all: [CMake][], [gh-pages][] and [Doxygen][] for documentation,
+[Travis-CI][] for continuous integration, [Coveralls][] for displaying code
+coverage reports, [clang-format][] for auto-formatting, [valgrind][],
+[sanitizers][], [swang][], [static-analyzer][], and many more!
 
 The aim of this project is to give you a fully-functional starting point for
 your own projects, so that you can skip setting up most of these tools
@@ -29,40 +29,61 @@ correctly.
 changes to your repository.
 4. Start working on your project.
 
-## Details
+## What you get
 
-Right now it uses:
-- cmake as a meta-build system
-- doxygen for embedded documentation
-- travis-ci for continuous integration: running unit-testing, benchmarks, and
-  updating the website
+- [CMake][] as a meta-build system:
+  - debug/release builds,
+  - high-optimization for release builds,
+  - extensive warnings enabled out-of-the-box,
+  - support for running tests and examples with [valgrind][] and [AddressSanitizer][],
+  - support for generating code coverage from tests and examples.
+- [Travis-CI][] is used for unit-testing:
+  - compilers: [clang][]-3.7, [gcc][]-5.0,
+  - test your code in debug/release, w/o [valgrind][], w/o [AddressSanitizer][],
+  - uploads code coverage automatically to [Coveralls][].
+- [Coveralls][] shows per-line code coverage.
 
-and optionally it can use:
-- clang-format for auto-formatting the code
-
-In the future it should also provide:
-- coveralls for code coverage
-- simple configuration of the following external packages:
-  - Catch for unit-testing
-  - range-v3 (which includes meta)
-  - Eggs.Variant
-  - Boost.Hana
-  - nonious/CPM for benchmarking
+## Directory structure
 
 The directory structure is as follows:
 
 ```shell
-bench/               : Bench-mark files
-cmake/               : CMake files
-include/             : Header files go here
-    project_name/    : Project header files
-src/                 : Source files
-test/                : Unit-tests 
-site/                : Website
-CMakeLists.txt       : Main CMake file
-.clang-format        : Specifies the formatting style
-.travis.yml          : Sets up travis
+benchmark/            : Benchmarks (reserved for future usage)
+cmake/                : CMake files
+include/project_name/ : Project header files
+site/                 : website (reserved for future usage)
+src/                  : Source files (reserved for future usage)
+test/                 : Unit-tests 
+.clang-format         : clang-format configuration
+.travis.yml           : Travis-CI configuration
+.gitignore            : With C++ defaults
+CMakeLists.txt        : CMake configuration
 ```
+
+## What remains to be done
+
+- Bootstrapping.
+- Targets to check the format and reformat your code automatically.
+- Semantic versioning.
+- Automatic documentation generation from doxygen.
+- Automatic upload of the documentation to gh-pages.
+- Provide FindLib.cmake files for common libraries that automatically.
+  get the last version from their repository:
+  - [range-v3][],
+  - [meta][],
+  - [Eggs.Variant][].
+  - [Boost.Hana][],
+  - [Eigen3][],
+  - [cppformat][],
+  - [spdlog][],
+  - [FIT][],
+  - [Thread Building Blocks][].
+- Benchmarking targets.
+- Performance tracking over git revisions (and automatic upload to gh-pages).
+- [static-analyzer][].
+- [swang][].
+- [ThreadSanitizer][].
+
 
 <!-- Links -->
 [badge.Travis]: https://travis-ci.org/gnzlbg/cpp_skeleton.svg?branch=master
@@ -73,5 +94,25 @@ CMakeLists.txt       : Main CMake file
 [Paul Fultz II]: http://pfultz2.com/blog/
 [Eric Niebler]: http://ericniebler.com/
 [range-v3]: https://github.com/ericniebler/range-v3
-[travis-ci]: https://travis-ci.org/
-[coveralls]: https://coveralls.io/
+[meta]: https://github.com/ericniebler/meta
+[Travis-CI]: https://travis-ci.org/
+[Coveralls]: https://coveralls.io/
+[CMake]: http://www.cmake.org/
+[gh-pages]: https://pages.github.com/
+[Doxygen]: http://www.stack.nl/~dimitri/doxygen/
+[valgrind]: http://valgrind.org/
+[AddressSanitizer]: http://clang.llvm.org/docs/AddressSanitizer.html
+[ThreadSanitizer]: http://clang.llvm.org/docs/ThreadSanitizer.html
+[sanitizers]: http://clang.llvm.org/docs/index.html
+[swang]: https://github.com/berenm/swang
+[static-analyzer]: http://clang-analyzer.llvm.org/
+[clang]: http://clang.llvm.org/
+[gcc]: https://gcc.gnu.org/
+[Eggs.Variant]: https://github.com/eggs-cpp/variant
+[Boost.Hana]: https://github.com/ldionne/hana
+[Eigen3]: http://eigen.tuxfamily.org/
+[cppformat]: https://github.com/cppformat/cppformat
+[spdlog]: https://github.com/gabime/spdlog
+[FIT]: https://github.com/pfultz2/Fit
+[Thread Building Blocks]: https://www.threadingbuildingblocks.org/
+

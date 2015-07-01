@@ -67,16 +67,15 @@ matrix:
 
 #      addons: *clang37
 
-# TODO: GCC 5 compiler
-# GCC 5
-#    - env: COMPILER=g++-5 BOOST_VERSION=1.57.0 UNIT_TESTS=true
-#      addons: &gcc5
-#        apt:
-#          packages:
-#            - g++-5
-#            - valgrind
-#          sources:
-#            - ubuntu-toolchain-r-test
+     # GCC 5
+    - env: COMPILER=g++-5 BUILD_TYPE=Debug
+      addons: &gcc5
+        apt:
+          packages:
+           - g++-5
+            - valgrind
+          sources:
+            - ubuntu-toolchain-r-test
 
 
 env:
@@ -122,7 +121,7 @@ install:
   - travis_retry wget --quiet -O - ${LLVM_URL} | tar --strip-components=1 ${TAR_FMT} -C llvm
   - travis_retry wget --quiet -O - ${LIBCXX_URL} | tar --strip-components=1 ${TAR_FMT} -C llvm/projects/libcxx
   - travis_retry wget --quiet -O - ${LIBCXXABI_URL} | tar --strip-components=1 ${TAR_FMT} -C llvm/projects/libcxxabi
-  - (cd llvm/build && cmake .. -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_BUILD_TYPE=${BUILD_TYPE} && make cxx -j2)
+  - (cd llvm/build && cmake .. -DCMAKE_CXX_COMPILER=${COMPILER} -DCMAKE_BUILD_TYPE=${BUILD_TYPE} && make cxx -j2)
 
   ############################################################################
   # Install a recent Doxygen

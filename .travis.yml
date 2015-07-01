@@ -82,9 +82,9 @@ env:
     # GitHub token for pushing the documentation, logging in with the
     # Travis command line utility and so on. The token is stored in the
     # ${GITHUB_TOKEN} environment variable.
-    - secure: ""
+    - secure: "Qlsp65HRdMW5UWfta/ZoynOnWQFMeVwxE7XU9yF1VnQXxpTEJFfgPY93ikPWX2NV9Hs53RwIwXD60cKXw6rMlqKIPMCrfG0zvJSmSjbP61IRat3jNmpXb6d4R855nk1AOlU6qJdEYtC0uuFYVe1p7XUEaUsEX+r1NKoiO2vg4Tc+zIIQdMEo5lWpH+XxkLipCq+9J9w4YY9phffkL3hPI9CM3tQtjv2l0XMcpKDRLdFXuBEh48yoyD6vf8b4XCVpn3rWw2PGSNLrUm2lCuYJwB5nlNhBSoTu/abNwpt7k69fcRmpGfVZsAyC0xp17ER1Qh5d79uzRZZvC+/H4TblI/djgfpFbGA+aRPe3uNJeOMJatbz3FoGrOkAvQ1thTB+hw+oNI7Z/Y/tS9OuOhVOEoJ3pysx7h2YdRGRprcOkRa39LBeABCsdgLd9IucsbxmJg76yeHWssldK6Tag7mVifOmnegaS0K8JcEXnhjiua98By1+4gtI8GFBynsd90tD5Miv/e9Q0FFM86B+Zf7FMauUQAeoXipqqsG/68+WynyKsbdxQPBHoZlMrmu+Bsma1k2rgg+D4TARC9cNCIkRuDg7nc4dyGS3r1IdeomzWpwU4C4kKudBo4tKRoUB9zaAn47iYqBWk2Q8y+dOlxR/l2mYM5yEkRqyPGxG+v2O/NI="
   matrix:
-    - COMPILER=clang++-3.7 BUILD_TYPE=Debug Coverage=true #Site=true
+    - COMPILER=clang++-3.7 BUILD_TYPE=Debug Coverage=true Site=true
 addons:
   apt:
     packages:
@@ -187,26 +187,15 @@ before_script:
 
 script:
   ############################################################################
-  # When building the site:
-  # - Build and run the benchmarks:
-  #   - always build and run the benchmarks
-  #   - when on master and not in pull-request, we pre-clone the datasets branch
-  #     so the next datasets.clone will just pull, which is pretty quick. This
-  #     reduces the risk of push conflicts when these jobs all run at the same
-  #     time. When we push, we use travis_retry to try again if we encounter a
-  #     push conflict, and we disable the output to avoid leaking the GitHub
-  #     token.
-  # - Compile in documentation mode
-  # - Build the documentation
+  # Build the documentation
+  ############################################################################
+  - if [[ "${Site}" == "true" ]]; then make doc; fi
+
+  ############################################################################
   # - Compile with code coverage
   ############################################################################
-  - if [[ "${Site}" == "true" ]]; then make benchmarks; fi
-  - if [[ "${Site}" == "true" && "${TRAVIS_PULL_REQUEST}" == "false" && "${TRAVIS_BRANCH}" == "master" ]]; then make datasets.clone; fi
-  - if [[ "${Site}" == "true" && "${TRAVIS_PULL_REQUEST}" == "false" && "${TRAVIS_BRANCH}" == "master" ]]; then travis_retry make datasets.push &>/dev/null; fi
-  - if [[ "${Site}" == "true" ]]; then make doc; fi
-  #- if [[ "${Site}" == "true" ]]; then cmake .. -DPROJECT_NAME_ENABLE_COVERAGE=ON; fi
   - if [[ "${Coverage}" == "true" ]]; then cmake .. -DPROJECT_NAME_ENABLE_COVERAGE=ON; fi
-  
+
   ############################################################################
   # Build and run the unit tests and examples.
   ############################################################################
@@ -228,6 +217,12 @@ after_success:
   - if [[ "${Coverage}" == "true" ]]; then lcov --directory ./ --base-directory ./ --capture --output-file coverage.info; fi
   - if [[ "${Coverage}" == "true" ]]; then lcov --remove coverage.info "/usr*" "*/$NAME/test/*" "*/$NAME/example/*" -o coverage.info; fi
   - if [[ "${Coverage}" == "true" ]]; then coveralls-lcov coverage.info; fi
+
+  ############################################################################
+  # Update the documentation
+  ############################################################################
+  - if [[ "${Site}" == "true" && "${TRAVIS_PULL_REQUEST}" == "false" && "${TRAVIS_BRANCH}" == "master" ]]; then make gh-pages.push; fi # &>/dev/null; fi
+
 
 #notifications:
 #  webhooks:

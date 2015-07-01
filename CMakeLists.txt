@@ -122,6 +122,13 @@ if (NOT PROJECT_NAME_ENABLE_ASSERTIONS)
   project_name_append_flag(PROJECT_NAME_HAS_NDEBUG -DNDEBUG)
 endif()
 
+if (PROJECT_NAME_ENABLE_COVERAGE)
+  if (CMAKE_BUILD_TYPE STREQUAL "Release")
+    message(FATAL_ERROR "code coverage instrumentation requires CMAKE_BUILD_TYPE=Debug")
+  endif()
+  set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --coverage")
+endif()
+
 # Optimization flags: debug
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
   project_name_append_flag(PROJECT_NAME_HAS_O0 -O0)

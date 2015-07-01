@@ -16,3 +16,5 @@
 # - name of the `include/project_name` directory and `project_name.hpp` files
 #   - using git mv  
 # - formatting style in the `.clang-format` file
+
+#in travis.yml replace cpp_skeleton with project_name

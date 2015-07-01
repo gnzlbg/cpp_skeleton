@@ -1,4 +1,4 @@
-# C++ Skeleton <a href="https://travis-ci.org/gnzlbg/cpp_skeleton" target="_blank">![Build Status][badge.Travis]</a>
+# C++ Skeleton <a href="https://travis-ci.org/gnzlbg/cpp_skeleton" target="_blank">![Build Status][badge.Travis]</a> <a href="https://coveralls.io/r/gnzlbg/cpp_skeleton" target="_blank">![Coverage Status][badge.Coveralls]</a>
 > Your standard C++ project skeleton
 
 ## Disclaimer
@@ -24,9 +24,10 @@ correctly.
 ## Getting started
 
 1. Fork this repository and check-out your fork.
-2. Run `bootstrap.py` script to configure it to your needs and commit your
-   changes to your repository.
-3. Start working on your project.
+2. Add your repository to [travis-ci][] and [coveralls][].
+3. Run `bootstrap.py` script to configure it to your needs and commit your
+changes to your repository.
+4. Start working on your project.
 
 ## Details
 
@@ -63,13 +64,14 @@ CMakeLists.txt       : Main CMake file
 .travis.yml          : Sets up travis
 ```
 
-
-
 <!-- Links -->
 [badge.Travis]: https://travis-ci.org/gnzlbg/cpp_skeleton.svg?branch=master
+[badge.Coveralls]: https://coveralls.io/repos/gnzlbg/cpp_skeleton/badge.svg
 [Boost.Hana]: https://github.com/ldionne/hana
 [Louis Dione]: http://ldionne.com/
 [FIT]: https://github.com/pfultz2/Fit
 [Paul Fultz II]: http://pfultz2.com/blog/
 [Eric Niebler]: http://ericniebler.com/
 [range-v3]: https://github.com/ericniebler/range-v3
+[travis-ci]: https://travis-ci.org/
+[coveralls]: https://coveralls.io/

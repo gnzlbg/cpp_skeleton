@@ -24,10 +24,10 @@ correctly.
 ## Getting started
 
 1. Fork this repository and check-out your fork.
-2. Add your repository to [travis-ci][] and [coveralls][].
-3. Run `bootstrap.py` script to configure it to your needs and commit your
-changes to your repository.
-4. Start working on your project.
+2. Add your repository to [Travis-CI][] and [Coveralls][].
+3. Run `bootstrap.py` script to configure it to your needs.
+4. Commit your changes to your repository.
+5. Start working on your project.
 
 ### CMake configuration options:
 

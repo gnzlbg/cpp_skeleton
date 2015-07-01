@@ -112,16 +112,16 @@ install:
   ############################################################################
   # Install libc++ and libc++abi
   ############################################################################
-  - if [[ "${COMPILER}" == "clang++-3.7" ]]; then LLVM_URL="https://github.com/llvm-mirror/llvm/archive/master.tar.gz"; fi
-  - if [[ "${COMPILER}" == "clang++-3.7" ]]; then LIBCXX_URL="https://github.com/llvm-mirror/libcxx/archive/master.tar.gz"; fi
-  - if [[ "${COMPILER}" == "clang++-3.7" ]]; then LIBCXXABI_URL="https://github.com/llvm-mirror/libcxxabi/archive/master.tar.gz"; fi
-  - if [[ "${COMPILER}" == "clang++-3.7" ]]; then TAR_FMT="-xz"; fi
+  - if [[ "${COMPILER}" =~ clang.+ ]]; then LLVM_URL="https://github.com/llvm-mirror/llvm/archive/master.tar.gz"; fi
+  - if [[ "${COMPILER}" =~ clang.+ ]]; then LIBCXX_URL="https://github.com/llvm-mirror/libcxx/archive/master.tar.gz"; fi
+  - if [[ "${COMPILER}" =~ clang.+ ]]; then LIBCXXABI_URL="https://github.com/llvm-mirror/libcxxabi/archive/master.tar.gz"; fi
+  - if [[ "${COMPILER}" =~ clang.+ ]]; then TAR_FMT="-xz"; fi
 
-  - mkdir -p llvm llvm/build llvm/projects/libcxx llvm/projects/libcxxabi
-  - travis_retry wget --quiet -O - ${LLVM_URL} | tar --strip-components=1 ${TAR_FMT} -C llvm
-  - travis_retry wget --quiet -O - ${LIBCXX_URL} | tar --strip-components=1 ${TAR_FMT} -C llvm/projects/libcxx
-  - travis_retry wget --quiet -O - ${LIBCXXABI_URL} | tar --strip-components=1 ${TAR_FMT} -C llvm/projects/libcxxabi
-  - (cd llvm/build && cmake .. -DCMAKE_CXX_COMPILER=${COMPILER} -DCMAKE_BUILD_TYPE=${BUILD_TYPE} && make cxx -j2)
+  - if [[ "${COMPILER}" =~ clang.+ ]]; then mkdir -p llvm llvm/build llvm/projects/libcxx llvm/projects/libcxxabi; fi
+  - if [[ "${COMPILER}" =~ clang.+ ]]; then travis_retry wget --quiet -O - ${LLVM_URL} | tar --strip-components=1 ${TAR_FMT} -C llvm; fi
+  - if [[ "${COMPILER}" =~ clang.+ ]]; then travis_retry wget --quiet -O - ${LIBCXX_URL} | tar --strip-components=1 ${TAR_FMT} -C llvm/projects/libcxx; fi
+  - if [[ "${COMPILER}" =~ clang.+ ]]; then travis_retry wget --quiet -O - ${LIBCXXABI_URL} | tar --strip-components=1 ${TAR_FMT} -C llvm/projects/libcxxabi; fi
+  - if [[ "${COMPILER}" =~ clang.+ ]]; then (cd llvm/build && cmake .. -DCMAKE_CXX_COMPILER=${COMPILER} -DCMAKE_BUILD_TYPE=${BUILD_TYPE} && make cxx -j2); fi
 
   ############################################################################
   # Install a recent Doxygen
@@ -135,7 +135,6 @@ install:
   ############################################################################
   #- rvm use 2.1 --install --binary --fuzzy
   #- gem install ruby-progressbar tilt
-
 
 before_script:
   ############################################################################
@@ -161,18 +160,18 @@ before_script:
   - mkdir build
   - cd build
   # Export the path to libc++
-  - if [[ "${STDLIB}" != "stdc++" ]]; then export CXXFLAGS="-I ${DEPS_DIR}/llvm/build/include/c++/v1"; fi
-  - if [[ "${STDLIB}" != "stdc++" ]]; then export LDFLAGS="-L ${DEPS_DIR}/llvm/build/lib -l c++ -l c++abi"; fi
-  - if [[ "${STDLIB}" != "stdc++" ]]; then export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${DEPS_DIR}/llvm/build/lib"; fi
+  - if [[ "${COMPILER}" =~ clang.+ ]]; then export CXXFLAGS="-I ${DEPS_DIR}/llvm/build/include/c++/v1"; fi
+  - if [[ "${COMPILER}" =~ clang.+ ]]; then export LDFLAGS="-L ${DEPS_DIR}/llvm/build/lib -l c++ -l c++abi"; fi
+  - if [[ "${COMPILER}" =~ clang.+ ]]; then export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${DEPS_DIR}/llvm/build/lib"; fi
 
   # We only use the memory checker for some builds, because otherwise it takes
   # too long for very little benefit. Concretely, if we have a memory leak or
   # something like that, it's either a compiler bug or an error that will show
   # up regardless of the Boost version. Hence, we use the memory checker only
   # once for each compiler.
-  - cmake .. -DCMAKE_CXX_COMPILER=${COMPILER} -DBOOST_ROOT=${DEPS_DIR}/boost -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DBOOST_HANA_ENABLE_WERROR=ON
-  - if [[ "${Valgrind}" == "true" ]]; then cmake .. -Dproject_name_ENABLE_VALGRIND=ON; fi
-  - if [[ "${ASan}" == "true" ]]; then cmake .. -Dproject_name_ENABLE_ASAN=ON; fi
+  - cmake .. -DCMAKE_CXX_COMPILER=${COMPILER} -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DPROJECT_NAME_ENABLE_WERROR=ON
+  - if [[ "${Valgrind}" == "true" ]]; then cmake .. -DPROJECT_NAME_ENABLE_VALGRIND=ON; fi
+  - if [[ "${ASan}" == "true" ]]; then cmake .. -DPROJECT_NAME_ENABLE_ASAN=ON; fi
 
 script:
   ############################################################################

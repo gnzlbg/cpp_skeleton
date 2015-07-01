@@ -29,6 +29,15 @@ correctly.
 changes to your repository.
 4. Start working on your project.
 
+### CMake configuration options:
+
+- `PROJECT_NAME_ENABLE_VALGRIND`: Run the unit tests and examples under [valgrind][] if it is found.
+- `PROJECT_NAME_ENABLE_ASAN`: Run the unit tests and examples using [AddressSanitizer][].
+- `PROJECT_NAME_ENABLE_COVERAGE`: Run the unit tests and examples with code coverage instrumentation.
+- `PROJECT_NAME_ENABLE_WERROR`: Fail and stop if a warning is triggered.
+- `PROJECT_NAME_ENABLE_DEBUG_INFORMATION`: Includes debug information in the binaries.
+- `PROJECT_NAME_ENABLE_ASSERTIONS`: Enables assertions.
+
 ## What you get
 
 - [CMake][] as a meta-build system:
@@ -47,7 +56,7 @@ changes to your repository.
 
 The directory structure is as follows:
 
-```shell
+```text
 benchmark/            : Benchmarks (reserved for future usage)
 cmake/                : CMake files
 include/project_name/ : Project header files

@@ -15,7 +15,7 @@ enable_testing()
 # Setup CMake options
 ##############################################################################
 include(CMakeDependentOption)
-option(PROJECT_NAME_ENABLE_VALGRID "Run the unit tests and examples under Valgrind if it is found." OFF)
+option(PROJECT_NAME_ENABLE_VALGRIND "Run the unit tests and examples under Valgrind if it is found." OFF)
 option(PROJECT_NAME_ENABLE_ASAN "Run the unit tests and examples using AddressSanitizer." OFF)
 option(PROJECT_NAME_ENABLE_COVERAGE "Run the unit tests and examples with code coverage instrumentation." OFF)
 option(PROJECT_NAME_ENABLE_WERROR "Fail and stop if a warning is triggered." OFF)

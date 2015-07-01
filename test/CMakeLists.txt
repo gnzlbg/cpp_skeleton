@@ -36,7 +36,7 @@ function(project_name_add_header_test header)
   if (NOT EXISTS "${CMAKE_CURRENT_BINARY_DIR}/header/${header}.cpp")
     file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/header/${header}.cpp" "
             #include <${header}>
-            int main() { }
+            int main() { return 0; }
         ")
   endif()
   add_executable(test.header.${_target} EXCLUDE_FROM_ALL

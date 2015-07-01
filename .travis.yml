@@ -46,6 +46,17 @@ matrix:
             - ubuntu-toolchain-r-test
             - llvm-toolchain-precise # latest
 
+    # GCC 5, debug build
+    - env: COMPILER=g++-5 BUILD_TYPE=Debug
+      addons: &gcc5
+        apt:
+          packages:
+            - g++-5
+            - valgrind
+          sources:
+            - ubuntu-toolchain-r-test
+
+
     # clang 3.7 with libc++, release build, ASan
 #    - env: COMPILER=clang++-3.7 BUILD_TYPE=Release ASan=true
 #      addons: *clang37
@@ -67,15 +78,6 @@ matrix:
 
 #      addons: *clang37
 
-     # GCC 5
-    - env: COMPILER=g++-5 BUILD_TYPE=Debug
-      addons: &gcc5
-        apt:
-          packages:
-           - g++-5
-            - valgrind
-          sources:
-            - ubuntu-toolchain-r-test
 
 
 env:

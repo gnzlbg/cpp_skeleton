@@ -3,10 +3,10 @@
 
 ## Disclaimer
 
-This project is a fork from Boost.Hana's build system, so most of the credit
-goes to Louis Dione for the great work he is doing. It also steals some ideas
-from the build systems of Paul Futz II FIT's library and Eric Niebler's range-v3
-library.
+This project is a fork from [Boost.Hana][]'s build system, so all of the credit
+goes to [Louis Dione][] for the great work he is doing. It also steals some
+ideas from the build systems of [Paul Fultz II][] [FIT][]'s library and
+[Eric Niebler][]'s [range-v3][] library.
 
 ## Overview
 
@@ -62,5 +62,10 @@ CMakeLists.txt       : Main CMake file
 3. Start working on your project.
 
 <!-- Links -->
-[badge.Gitter]: https://img.shields.io/badge/gitter-join%20chat-blue.svg
-[badge.Travis]: https://travis-ci.org/ldionne/hana.svg?branch=master
+[badge.Travis]: https://travis-ci.org/gnzlbg/cpp_skeleton.svg?branch=master
+[Boost.Hana]: https://github.com/ldionne/hana
+[Louis Dione]: http://ldionne.com/
+[FIT]: https://github.com/pfultz2/Fit
+[Paul Fultz II]: http://pfultz2.com/blog/
+[Eric Niebler]: http://ericniebler.com/
+[range-v3]: https://github.com/ericniebler/range-v3

@@ -98,8 +98,8 @@ project_name_append_flag(PROJECT_NAME_HAS___EXTERN_ALWAYS_INLINE -D__extern_alwa
 
 # Compiler flags controlled by CMake options above
 if (PROJECT_NAME_ENABLE_WERROR)
-    boost_hana_append_flag(PROJECT_NAME_HAS_WERROR -Werror)
-    boost_hana_append_flag(PROJECT_NAME_HAS_WX -WX)
+    project_name_append_flag(PROJECT_NAME_HAS_WERROR -Werror)
+    project_name_append_flag(PROJECT_NAME_HAS_WX -WX)
 endif()
 
 ##############################################################################
@@ -116,7 +116,7 @@ endif()
 # find_package(PythonInterp 2.7)
 # find_package(Ruby 2.1)
 
-# if (BOOST_HANA_ENABLE_MEMCHECK)
+# if (PROJECT_NAME_ENABLE_VALGRIND)
 #     find_package(Valgrind REQUIRED)
 # endif()
 

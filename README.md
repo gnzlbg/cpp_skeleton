@@ -56,16 +56,11 @@ CMakeLists.txt       : Main CMake file
 
 ## Getting started
 
-After forking the project there are a couple of things that need to be set-up.
-This is a not-yet fully comprehensive list:
+1. Fork this repository and check-out your fork.
+2. Run `bootstrap.py` script to configure it to your needs and commit your
+   changes to your repository.
+3. Start working on your project.
 
-- In the `CMakeLists.txt` file:
-  - name of the project
-- name of the `include/project_name` directory and `project_name.hpp` files
-- formatting style in the `.clang-format` file
-
-
-## TODOS
-
-- support non-header-only libraries as well (PR are very welcome).
-- provide a script that sets the project for you
+<!-- Links -->
+[badge.Gitter]: https://img.shields.io/badge/gitter-join%20chat-blue.svg
+[badge.Travis]: https://travis-ci.org/ldionne/hana.svg?branch=master

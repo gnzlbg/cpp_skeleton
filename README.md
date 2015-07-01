@@ -3,7 +3,7 @@
 
 ## Disclaimer
 
-This project is a fork from [Boost.Hana][]'s build system, so all of the credit
+This project is a fork from [Hana][]'s build system, so all of the credit
 goes to [Louis Dione][] for the great work he is doing. It also steals some
 ideas from the build systems of [Paul Fultz II][] [FIT][]'s library and
 [Eric Niebler][]'s [range-v3][] library.
@@ -77,27 +77,30 @@ CMakeLists.txt        : CMake configuration
 - Automatic documentation generation from doxygen.
 - Automatic upload of the documentation to gh-pages.
 - Provide FindLib.cmake files for common libraries that automatically.
-  get the last version from their repository:
-  - [range-v3][],
-  - [meta][],
-  - [Eggs.Variant][].
-  - [Boost.Hana][],
-  - [Eigen3][],
-  - [cppformat][],
-  - [spdlog][],
-  - [FIT][],
-  - [Thread Building Blocks][].
+get the last version from their repository:
+    - [ASIO][],
+    - [Catch][],
+    - [cppformat][],
+    - [docopt][],
+    - [Eigen3][],
+    - [Eggs.Variant][].
+    - [FIT][],
+    - [Hana][],
+    - [json][],
+    - [meta][],
+    - [range-v3][],
+    - [spdlog][],
+    - [Thread Building Blocks][].
 - Benchmarking targets.
 - Performance tracking over git revisions (and automatic upload to gh-pages).
 - [static-analyzer][].
 - [swang][].
 - [ThreadSanitizer][].
 
-
 <!-- Links -->
 [badge.Travis]: https://travis-ci.org/gnzlbg/cpp_skeleton.svg?branch=master
 [badge.Coveralls]: https://coveralls.io/repos/gnzlbg/cpp_skeleton/badge.svg
-[Boost.Hana]: https://github.com/ldionne/hana
+[Hana]: https://github.com/ldionne/hana
 [Louis Dione]: http://ldionne.com/
 [FIT]: https://github.com/pfultz2/Fit
 [Paul Fultz II]: http://pfultz2.com/blog/
@@ -118,11 +121,13 @@ CMakeLists.txt        : CMake configuration
 [clang]: http://clang.llvm.org/
 [gcc]: https://gcc.gnu.org/
 [Eggs.Variant]: https://github.com/eggs-cpp/variant
-[Boost.Hana]: https://github.com/ldionne/hana
 [Eigen3]: http://eigen.tuxfamily.org/
 [cppformat]: https://github.com/cppformat/cppformat
 [spdlog]: https://github.com/gabime/spdlog
 [FIT]: https://github.com/pfultz2/Fit
 [Thread Building Blocks]: https://www.threadingbuildingblocks.org/
 [clang-format]: http://clang.llvm.org/docs/ClangFormat.html
-
+[Catch]: https://github.com/philsquared/Catch
+[ASIO]: https://think-async.com/
+[docopt]: https://github.com/docopt/docopt.cpp
+[json]: https://github.com/nlohmann/json

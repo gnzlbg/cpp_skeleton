@@ -124,4 +124,5 @@ CMakeLists.txt        : CMake configuration
 [spdlog]: https://github.com/gabime/spdlog
 [FIT]: https://github.com/pfultz2/Fit
 [Thread Building Blocks]: https://www.threadingbuildingblocks.org/
+[clang-format]: http://clang.llvm.org/docs/ClangFormat.html
 

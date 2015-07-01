@@ -20,17 +20,6 @@ sudo: false
 #   - Runs the benchmarks
 #   - Generates documentation
 #   - Generates website
-env:
-  global:
-    - ASan=false
-    - Valgrind=false
-    - Site=false
-
-    # GitHub token for pushing the documentation, logging in with the
-    # Travis command line utility and so on. The token is stored in the
-    # ${GITHUB_TOKEN} environment variable.
-    - secure: ""
-
 matrix:
   include:
    # The first case in the matrix for a given compiler defines how to install
@@ -55,7 +44,7 @@ matrix:
             - valgrind
           sources:
             - ubuntu-toolchain-r-test
-            - llvm-toolchain-precise-3.7
+            - llvm-toolchain-precise # latest
 
     # clang 3.7 with libc++, release build, ASan
 #    - env: COMPILER=clang++-3.7 BUILD_TYPE=Release ASan=true
@@ -71,10 +60,40 @@ matrix:
 
     # Site
 #    - env: COMPILER=clang++-3.7 BUILD_TYPE=Release Site=true
+        # GitHub token for pushing the documentation, logging in with the
+        # Travis command line utility and so on. The token is stored in the
+        # ${GITHUB_TOKEN} environment variable.
+#        - secure: ""
+
 #      addons: *clang37
 
 # TODO: GCC 5 compiler
+# GCC 5
+#    - env: COMPILER=g++-5 BOOST_VERSION=1.57.0 UNIT_TESTS=true
+#      addons: &gcc5
+#        apt:
+#          packages:
+#            - g++-5
+#            - valgrind
+#          sources:
+#            - ubuntu-toolchain-r-test
 
+
+env:
+  global:
+    # GitHub token for pushing the documentation, logging in with the
+    # Travis command line utility and so on. The token is stored in the
+    # ${GITHUB_TOKEN} environment variable.
+    #- secure: "gikHKTxWGN9FnJ9m+F53Y5j7jWGAOKlL2ylcFM2o0KoXOkoNAK9bJpilNppRwWhgwpC3yTJDN0k7xh9I6Ec8L0G46Q2QZdtJ/NFvWbafpzQcrAg6+872yKlP8h3GHexwEDdAdxCv8g2HeavFrDcqynssI8IoIHyZmsR6Dwym+eo="
+
+  # We define the documentation job here instead of in matrix.include, because
+  # otherwise we end up with a job that has no environment variables at all in
+  # the matrix.
+  matrix:
+    - COMPILER=clang++-3.7 BUILD_TYPE=Debug #Site=true
+
+# Those addons are just for the documentation job.
+addons: *clang37
 
 install:
   ############################################################################
@@ -103,7 +122,7 @@ install:
   - travis_retry wget --quiet -O - ${LLVM_URL} | tar --strip-components=1 ${TAR_FMT} -C llvm
   - travis_retry wget --quiet -O - ${LIBCXX_URL} | tar --strip-components=1 ${TAR_FMT} -C llvm/projects/libcxx
   - travis_retry wget --quiet -O - ${LIBCXXABI_URL} | tar --strip-components=1 ${TAR_FMT} -C llvm/projects/libcxxabi
-  - (cd llvm/build && cmake .. -DCMAKE_CXX_COMPILER=clang++ && make cxx -j2)
+  - (cd llvm/build && cmake .. -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_BUILD_TYPE=${BUILD_TYPE} && make cxx -j2)
 
   ############################################################################
   # Install a recent Doxygen
@@ -115,8 +134,8 @@ install:
   ############################################################################
   # Install and use a more recent Ruby and install the gems for the benchmarks
   ############################################################################
-  - rvm use 2.1 --install --binary --fuzzy
-  - gem install ruby-progressbar tilt
+  #- rvm use 2.1 --install --binary --fuzzy
+  #- gem install ruby-progressbar tilt
 
 
 before_script:
@@ -191,3 +210,6 @@ script:
 #    urls: https://webhooks.gitter.im/e/ce1e3a2036d94b4a644f
 #    on_success: change
 #    on_failure: always
+
+notifications:
+  email: false

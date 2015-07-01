@@ -41,8 +41,7 @@ correctly.
 1. Fork this repository and check-out your fork.
 2. Add your repository to [Travis-CI][] and [Coveralls][].
 3. Run `bootstrap.py` script to configure it to your needs.
-   3.1 Replace the secure token with your own.
-   3.2 Create a gh-pages branch that is empty.
+   - Replace the secure token with your own and create a gh-pages branch that is empty.
 4. Commit your changes to your repository (including the gh-pages branch).
 5. Start working on your project.
 

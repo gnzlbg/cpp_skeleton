@@ -71,7 +71,6 @@ CMakeLists.txt        : CMake configuration
 
 ## What remains to be done
 
-- Bootstrapping.
 - Targets to check the format and reformat your code automatically.
 - Semantic versioning.
 - Automatic documentation generation from doxygen.

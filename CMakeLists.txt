@@ -16,9 +16,11 @@ enable_testing()
 ##############################################################################
 include(CMakeDependentOption)
 option(PROJECT_NAME_ENABLE_VALGRID "Run the unit tests and examples under Valgrind if it is found." OFF)
-option(PROJECT_NAME_ENABLE_ASAN   "Run the unit tests and examples using AddressSanitizer." OFF)
+option(PROJECT_NAME_ENABLE_ASAN "Run the unit tests and examples using AddressSanitizer." OFF)
 option(PROJECT_NAME_ENABLE_COVERAGE "Run the unit tests and examples with code coverage instrumentation." OFF)
-option(PROJECT_NAME_ENABLE_WERROR   "Fail and stop if a warning is triggered." OFF)
+option(PROJECT_NAME_ENABLE_WERROR "Fail and stop if a warning is triggered." OFF)
+option(PROJECT_NAME_ENABLE_DEBUG_INFORMATION "Includes debug information in the binaries." OFF)
+option(PROJECT_NAME_ENABLE_ASSERTIONS "Enables assertions." OFF)
 
 ##############################################################################
 # Setup compiler flags (more can be set on a per-target basis or in subdirectories)
@@ -100,6 +102,42 @@ project_name_append_flag(PROJECT_NAME_HAS___EXTERN_ALWAYS_INLINE -D__extern_alwa
 if (PROJECT_NAME_ENABLE_WERROR)
     project_name_append_flag(PROJECT_NAME_HAS_WERROR -Werror)
     project_name_append_flag(PROJECT_NAME_HAS_WX -WX)
+  endif()
+
+if (PROJECT_NAME_ENABLE_ASAN)
+  project_name_append_flag(PROJECT_NAME_HAS_SANITIZE "-fsanitize=address,integer,undefined,leak")
+  project_name_append_flag(PROJECT_NAME_HAS_NO_OMIT_FRAME_POINTER -fno-omit-frame-pointer)
+  project_name_append_flag(PROJECT_NAME_HAS_NO_SANITIZE "-fno-sanitize=unsigned-integer-overflow")
+else()
+  project_name_append_flag(PROJECT_NAME_HAS_OMIT_FRAME_POINTER -fomit-frame-pointer)
+endif()
+
+if (PROJECT_NAME_ENABLE_DEBUG_INFORMATION)
+  project_name_append_flag(PROJECT_NAME_HAS_G3 -g3)
+else()
+  project_name_append_flag(PROJECT_NAME_HAS_G0 -g0)
+endif()
+
+if (NOT PROJECT_NAME_ENABLE_ASSERTIONS)
+  project_name_append_flag(PROJECT_NAME_HAS_NDEBUG -DNDEBUG)
+endif()
+
+# Optimization flags: debug
+if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+  project_name_append_flag(PROJECT_NAME_HAS_O0 -O0)
+  project_name_append_flag(PROJECT_NAME_HAS_NO_INLINE -fno-inline)
+  project_name_append_flag(PROJECT_NAME_HAS_STACK_PROTECTOR_ALL -fstack-protector-all)
+endif()
+
+# Optimization flags: release
+if (CMAKE_BUILD_TYPE STREQUAL "Release")
+  project_name_append_flag(PROJECT_NAME_HAS_OFAST -Ofast)
+  project_name_append_flag(PROJECT_NAME_HAS_MARCH_NATIVE "-march=native")
+  project_name_append_flag(PROJECT_NAME_HAS_MTUNE_NATIVE "-mtune=native")
+  project_name_append_flag(PROJECT_NAME_HAS_STRICT_ALIASING "-fstrict-aliasing")
+  project_name_append_flag(PROJECT_NAME_HAS_VECTORIZE "-fvectorize")
+  # Others could be: -pipe pfdata-sections -ffunction-sections
+  # for clang: -mllvm -inline-threshold=X (X=1000, 10000, ...)
 endif()
 
 ##############################################################################
@@ -108,17 +146,31 @@ endif()
 # Behavior when the package is found or not is customized at the
 # point where the package is required.
 ##############################################################################
+
+# Git: parses current project commit
+find_package(Git)
+if (GIT_FOUND)
+  execute_process(
+    COMMAND ${GIT_EXECUTABLE} rev-parse --short HEAD
+    OUTPUT_VARIABLE PROJECT_NAME_CURRENT_COMMIT
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+endif()
+
+# Valgrid
+if (PROJECT_NAME_ENABLE_VALGRIND)
+  find_program(MEMORYCHECK_COMMAND valgrind REQUIRED)
+  set(MEMORYCHECK_COMMAND_OPTIONS "--trace-children=yes --leak-check=full")
+  include(Dart)
+endif()
+
 #find_package(Boost)
 # find_package(Doxygen)
-# find_package(Git)
 # find_package(Meta)
 # find_package(MPL11)
 # find_package(PythonInterp 2.7)
 # find_package(Ruby 2.1)
 
-# if (PROJECT_NAME_ENABLE_VALGRIND)
-#     find_package(Valgrind REQUIRED)
-# endif()
 
 # if (NOT ${Boost_FOUND})
 #     message(WARNING
@@ -126,13 +178,6 @@ endif()
 #         "on Boost won't be available.")
 # endif()
 
-# if (GIT_FOUND)
-#     execute_process(
-#         COMMAND ${GIT_EXECUTABLE} rev-parse --short HEAD
-#         OUTPUT_VARIABLE BOOST_HANA_CURRENT_COMMIT
-#         OUTPUT_STRIP_TRAILING_WHITESPACE
-#         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
-# endif()
 
 
 ##############################################################################
@@ -147,9 +192,9 @@ endif()
 # push to the repository.
 ##############################################################################
 if (DEFINED ENV{GITHUB_TOKEN})
-    set(BOOST_HANA_ORIGIN_URL "https://github_user:$ENV{GITHUB_TOKEN}@github.com/github_user/project_name")
+  set(PROJECT_NAME_ORIGIN_URL "https://github_user:$ENV{GITHUB_TOKEN}@github.com/github_user/project_name")
 else()
-    set(BOOST_HANA_ORIGIN_URL "https://github.com/github_user/project_name")
+  set(PROJECT_NAME_ORIGIN_URL "https://github.com/github_user/project_name")
 endif()
 
 
@@ -180,15 +225,9 @@ endfunction()
 #   project_name_add_test(<name> <command> [<arg>...])
 #
 # Creates a test called `name`, which runs the given `command` with the given
-# `arg`uments. However, if `project_name_ENABLE_VALGRIND` is set to `ON`, the
-# test will run the provided command under the memory checker.
+# `arg`uments.
 function(project_name_add_test name)
-    if (PROJECT_NAME_ENABLE_VALGRIND)
-        add_test(${name}
-            ${Valgrind_EXECUTABLE} --leak-check=full --error-exitcode=1 ${ARGN})
-    else()
-        add_test(${name} ${ARGN})
-    endif()
+  add_test(${name} ${ARGN})
 endfunction()
 
 #   project_name_list_remove_glob(<list> <GLOB|GLOB_RECURSE> [globbing expressions]...)

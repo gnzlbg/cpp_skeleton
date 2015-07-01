@@ -35,7 +35,7 @@ matrix:
    # For each build we also define all the global variables specified above
    # TODO: use defaults and define only some of them
 
-    # clang 3.7 with libc++, debug build
+    # clang 3.7, debug build
     - env: COMPILER=clang++-3.7 BUILD_TYPE=Debug
       addons: &clang37
         apt:
@@ -45,6 +45,18 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
             - llvm-toolchain-precise # latest
+
+    # clang 3.7, release build, ASan
+    - env: COMPILER=clang++-3.7 BUILD_TYPE=Release ASan=true
+      addons: *clang37
+
+    # clang 3.7, release build, valgrind
+    - env: COMPILER=clang++-3.7 BUILD_TYPE=Release Valgrind=true
+      addons: *clang37
+
+    # clang 3.7, release build
+    - env: COMPILER=clang++-3.7 BUILD_TYPE=Release
+      addons: *clang37
 
     # GCC 5, debug build
     - env: COMPILER=g++-5 BUILD_TYPE=Debug
@@ -56,29 +68,9 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
 
-
-    # clang 3.7 with libc++, release build, ASan
-#    - env: COMPILER=clang++-3.7 BUILD_TYPE=Release ASan=true
-#      addons: *clang37
-
-    # clang 3.7 with libc++, release build, valgrind
-#    - env: COMPILER=clang++-3.7 BUILD_TYPE=Release Valgrind=true
-#      addons: *clang37
-
-    # clang 3.7 with libc++, release build
-#    - env: COMPILER=clang++-3.7 BUILD_TYPE=Release
-#      addons: *clang37
-
-    # Site
-#    - env: COMPILER=clang++-3.7 BUILD_TYPE=Release Site=true
-        # GitHub token for pushing the documentation, logging in with the
-        # Travis command line utility and so on. The token is stored in the
-        # ${GITHUB_TOKEN} environment variable.
-#        - secure: ""
-
-#      addons: *clang37
-
-
+    # GCC 5, release build, valgrind
+    - env: COMPILER=clang++-3.7 BUILD_TYPE=Release Valgrind=true
+      addons: *clang37
 
 env:
   global:
@@ -92,6 +84,15 @@ env:
   # the matrix.
   matrix:
     - COMPILER=clang++-3.7 BUILD_TYPE=Debug #Site=true
+        # Site
+#    - env: COMPILER=clang++-3.7 BUILD_TYPE=Release Site=true
+        # GitHub token for pushing the documentation, logging in with the
+        # Travis command line utility and so on. The token is stored in the
+        # ${GITHUB_TOKEN} environment variable.
+#        - secure: ""
+
+
+
 
 # Those addons are just for the documentation job.
 addons: *clang37

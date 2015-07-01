@@ -21,6 +21,15 @@ The aim of this project is to give you a fully-functional starting point for
 your own projects, so that you can skip setting up most of these tools
 correctly.
 
+## Getting started
+
+1. Fork this repository and check-out your fork.
+2. Run `bootstrap.py` script to configure it to your needs and commit your
+   changes to your repository.
+3. Start working on your project.
+
+## Details
+
 Right now it uses:
 - cmake as a meta-build system
 - doxygen for embedded documentation
@@ -54,12 +63,7 @@ CMakeLists.txt       : Main CMake file
 .travis.yml          : Sets up travis
 ```
 
-## Getting started
 
-1. Fork this repository and check-out your fork.
-2. Run `bootstrap.py` script to configure it to your needs and commit your
-   changes to your repository.
-3. Start working on your project.
 
 <!-- Links -->
 [badge.Travis]: https://travis-ci.org/gnzlbg/cpp_skeleton.svg?branch=master

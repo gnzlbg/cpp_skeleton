@@ -3,10 +3,14 @@
 
 ## Disclaimer
 
-This project is a fork from [Hana][]'s build system, so all of the credit
-goes to [Louis Dione][] for the great work he is doing. It also steals some
-ideas from the build systems of [Paul Fultz II][] [FIT][]'s library and
-[Eric Niebler][]'s [range-v3][] library.
+> This is buggy and unfinished, use at your own risk!
+
+This project is a fork from [Hana][]'s build system, so all of the credit goes
+to [Louis Dione][] for the great work he is doing. It also steals some ideas
+from the build systems of [Paul Fultz II][] [FIT][]'s library and
+[Eric Niebler][]'s [range-v3][] library. It is released under the Boost Software
+license, but note that some of the libraries that are optionally provided might
+have a different license.
 
 ## Overview
 
@@ -19,7 +23,9 @@ coverage reports, [clang-format][] for auto-formatting, [valgrind][],
 
 The aim of this project is to give you a fully-functional starting point for
 your own projects, so that you can skip setting up most of these tools
-correctly.
+correctly. Every project is different tho, so we expect you to modify your build
+system over time. This skeleton is just there to give you the fundamentals,
+anything else is up to you! Send a PR if you find something is missing.
 
 ## What you get
 

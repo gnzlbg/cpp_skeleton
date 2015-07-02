@@ -98,6 +98,7 @@ get the last version from their repository:
     - [Eigen3][],
     - [Eggs.Variant][].
     - [FIT][],
+    - [folly][],
     - [Hana][],
     - [json][],
     - [meta][],
@@ -144,3 +145,4 @@ get the last version from their repository:
 [ASIO]: https://think-async.com/
 [docopt]: https://github.com/docopt/docopt.cpp
 [json]: https://github.com/nlohmann/json
+[folly]: https://github.com/facebook/folly

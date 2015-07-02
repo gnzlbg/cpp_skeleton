@@ -169,11 +169,13 @@ find_package(Doxygen)
 
 # Valgrid
 if (PROJECT_NAME_ENABLE_VALGRIND)
-  find_program(MEMORYCHECK_COMMAND valgrind REQUIRED)
+  find_program(MEMORYCHECK_COMMAND valgrind)
+  if(MEMORYCHECK_COMMAND-NOTFOUND)
+    message(FATAL_ERROR "valgrind not found")
+  endif()
   set(MEMORYCHECK_COMMAND_OPTIONS "--trace-children=yes --leak-check=full")
   include(Dart)
 endif()
-
 
 #find_package(Boost)
 

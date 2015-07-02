@@ -196,7 +196,8 @@ script:
   ############################################################################
   - make tests -k -j2
   - make examples -k -j2 &>/dev/null
-  - make check -k VERBOSE=1
+  - if [[ "${Valgrind}" != "true" ]]; then make check -k; fi
+  - if [[ "${Valgrind}" == "true" ]]; then ctest -VV -D ExperimentalMemCheck; fi
 
 after_success:
   ############################################################################

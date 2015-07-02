@@ -202,10 +202,16 @@ endif()
 # In this case, we'll be asked for our username and password when/if we try to
 # push to the repository.
 ##############################################################################
+#if (DEFINED ENV{GITHUB_TOKEN})
+#  set(PROJECT_NAME_ORIGIN_URL "https://github_user:$ENV{GITHUB_TOKEN}@github.com/github_user/project_name")
+#else()
+#  set(PROJECT_NAME_ORIGIN_URL "https://github.com/github_user/project_name")
+#endif()
+
 if (DEFINED ENV{GITHUB_TOKEN})
-  set(PROJECT_NAME_ORIGIN_URL "https://github_user:$ENV{GITHUB_TOKEN}@github.com/github_user/project_name")
+  set(PROJECT_NAME_ORIGIN_URL "https://gnzlbg:$ENV{GITHUB_TOKEN}@github.com/gnzlbg/cpp_skeleton")
 else()
-  set(PROJECT_NAME_ORIGIN_URL "https://github.com/github_user/project_name")
+  set(PROJECT_NAME_ORIGIN_URL "https://github.com/gnzlbg/cpp_skeleton")
 endif()
 
 
